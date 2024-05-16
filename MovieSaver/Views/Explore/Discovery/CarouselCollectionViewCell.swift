@@ -12,15 +12,14 @@ class CarouselCollectionViewCell: UICollectionViewCell {
     let collectionView: UICollectionView
     var movies = [Movie]()
     let viewModel = DiscoveryViewModel()
-    
+
     override init(frame: CGRect) {
-        
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
 
         super.init(frame: frame)
-        
+
         layout.scrollDirection = .horizontal
-        
+
         let height = collectionView.bounds.height
         let width = (height * 2) / 3
         layout.itemSize = .init(width: width, height: height)
@@ -28,43 +27,42 @@ class CarouselCollectionViewCell: UICollectionViewCell {
         layout.numberOfSections = Int(Int16.max) / layout.numberOfItems
 
         collectionView.register(UINib(nibName: "DiscoveryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        
+
         collectionView.showsHorizontalScrollIndicator = false
-        
+
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+
         contentView.addSubview(collectionView)
-        
+
         viewModel.delegate = self
-        
+
         viewModel.fetchMovies()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension CarouselCollectionViewCell: DiscoveryDelegate {
-   func didUpdateMovies() {
+    func didUpdateMovies() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
-    
-
 }
 
 extension CarouselCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in _: UICollectionView) -> Int {
         layout.numberOfSections
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         10
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! DiscoveryCollectionViewCell
         if let movie = viewModel.getMovie(index: indexPath.row) {
@@ -73,8 +71,7 @@ extension CarouselCollectionViewCell: UICollectionViewDelegate, UICollectionView
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.selectCategory(index: indexPath.row)
     }
-    
 }

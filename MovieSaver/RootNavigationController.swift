@@ -1,5 +1,5 @@
 //
-//  RootNavigationViewController.swift
+//  RootNavigationController.swift
 //  MovieSaver
 //
 //  Created by tungdd on 16/05/2024.
@@ -8,14 +8,11 @@
 import UIKit
 
 class RootNavigationBarController: UINavigationController {
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         delegate = self
         interactivePopGestureRecognizer?.delegate = self
-
     }
 }
 

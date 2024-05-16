@@ -13,7 +13,7 @@ protocol DiscoveryDelegate: AnyObject {
 
 class DiscoveryViewModel {
     weak var delegate: DiscoveryDelegate?
-    
+
     private var movies = [Movie]() {
         didSet {
             if let delegate {
@@ -21,27 +21,25 @@ class DiscoveryViewModel {
             }
         }
     }
-        
+
     func fetchMovies() {
         NetworkManager.shared.getDiscovery(completion: {
             result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 self.movies = response.results
-            case .failure(let error):
+            case let .failure(error):
                 print(error)
             }
         })
     }
-    
+
     func getMovie(index: Int) -> Movie? {
         if index >= movies.count {
             return nil
         }
         return movies[index]
     }
-    
-    func selectCategory(index: Int){
-        
-    }
+
+    func selectCategory(index _: Int) {}
 }

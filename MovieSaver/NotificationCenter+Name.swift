@@ -7,6 +7,6 @@
 
 import Foundation
 
-extension Notification.Name {
-    public static let didSelectCategory = Notification.Name("didSelectCategory")
+public extension Notification.Name {
+    static let didSelectCategory = Notification.Name("didSelectCategory")
 }

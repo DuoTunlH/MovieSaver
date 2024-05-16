@@ -9,7 +9,7 @@ import UIKit
 
 class CarouselViewLayoutAttributes: UICollectionViewLayoutAttributes {
     var position: CGFloat = 0
-    
+
     override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? CarouselViewLayoutAttributes else {
             return false
@@ -18,7 +18,7 @@ class CarouselViewLayoutAttributes: UICollectionViewLayoutAttributes {
         isEqual = isEqual && (position == object.position)
         return isEqual
     }
-    
+
     override func copy(with zone: NSZone? = nil) -> Any {
         let copy = super.copy(with: zone) as! CarouselViewLayoutAttributes
         copy.position = position
@@ -26,9 +26,7 @@ class CarouselViewLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 }
 
-
 class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
-    
     var contentSize: CGSize = .zero
     var collectionViewSize: CGSize = .zero
     var leadingSpacing: CGFloat = 0
@@ -39,63 +37,62 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var numberOfSections = 1
     var numberOfItems = 5
     var actualInteritemSpacing: CGFloat = 16
-    
+
     var actualItemSize: CGSize = .init(width: 195, height: 195)
-    
+
     override func prepare() {
         super.prepare()
         guard let collectionView = collectionView else {
             return
         }
-        
+
         guard needsReprepare || collectionViewSize != collectionView.frame.size else {
             return
         }
         needsReprepare = false
-        
+
         actualItemSize = itemSize
-        
+
         collectionViewSize = collectionView.frame.size
-        
+
         leadingSpacing = (collectionView.frame.width - actualItemSize.width) * 0.5
-        
+
         contentSize = {
             let numberOfItems = self.numberOfItems * self.numberOfSections
             var contentSizeWidth: CGFloat = self.leadingSpacing *
-            2
+                2
             contentSizeWidth += CGFloat(numberOfItems - 1) * self.actualInteritemSpacing
             contentSizeWidth += CGFloat(numberOfItems) * self.actualItemSize.width
             let contentSize = CGSize(width: contentSizeWidth, height: collectionView.frame.height)
             return contentSize
         }()
         adjustCollectionViewBounds()
-        
     }
-    
+
     override func shouldInvalidateLayout(forBoundsChange _: CGRect) -> Bool {
         true
     }
-    
+
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var layoutAttributes = [UICollectionViewLayoutAttributes]()
         guard itemSpacing > 0, !rect.isEmpty else {
             return layoutAttributes
         }
-        
+
         let rect = rect.intersection(CGRect(origin: .zero, size: contentSize))
         guard !rect.isEmpty else {
             return layoutAttributes
         }
-        
+
         let numberOfItemsBefore = max(Int((rect.minX - leadingSpacing) / itemSpacing), 0)
         let startPosition = leadingSpacing + CGFloat(numberOfItemsBefore) * itemSpacing
         let startIndex = numberOfItemsBefore
-        
+
         var itemIndex = startIndex
         var origin = startPosition
-        
+
         let maxPosition = min(rect.maxX, contentSize.width - actualItemSize.width - leadingSpacing)
-        
+
         while origin - maxPosition <= max(CGFloat(100.0) * .ulpOfOne * abs(origin + maxPosition), .leastNonzeroMagnitude) {
             let indexPath = IndexPath(item: itemIndex % numberOfItems, section: itemIndex / numberOfItems)
             let attributes = layoutAttributesForItem(at: indexPath) as! CarouselViewLayoutAttributes
@@ -106,7 +103,7 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         return layoutAttributes
     }
-    
+
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         let attributes = CarouselViewLayoutAttributes(forCellWith: indexPath)
         attributes.indexPath = indexPath
@@ -116,17 +113,18 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.size = actualItemSize
         return attributes
     }
-    
+
     override open func targetContentOffset(
         forProposedContentOffset proposedContentOffset: CGPoint,
-        withScrollingVelocity velocity: CGPoint)
-    -> CGPoint
+        withScrollingVelocity velocity: CGPoint
+    )
+        -> CGPoint
     {
         guard let collectionView = collectionView else {
             return proposedContentOffset
         }
         var proposedContentOffset = proposedContentOffset
-        
+
         func calculateTargetOffset(by proposedOffset: CGFloat, boundedOffset: CGFloat) -> CGFloat {
             var targetOffset: CGFloat
             switch velocity.x {
@@ -149,7 +147,7 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
         proposedContentOffset = CGPoint(x: proposedContentOffsetX, y: proposedContentOffsetY)
         return proposedContentOffset
     }
-    
+
     func contentOffset(for indexPath: IndexPath) -> CGPoint {
         let origin = frame(for: indexPath).origin
         guard let collectionView = collectionView else {
@@ -159,13 +157,13 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
             let contentOffsetX = origin.x - (collectionView.frame.width * 0.5 - self.actualItemSize.width * 0.5)
             return contentOffsetX
         }()
-        
+
         let contentOffsetY: CGFloat = 0
         let contentOffset = CGPoint(x: contentOffsetX, y: contentOffsetY)
-        
+
         return contentOffset
     }
-    
+
     func adjustCollectionViewBounds() {
         guard let collectionView = collectionView else {
             return
@@ -175,7 +173,7 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
         let newBounds = CGRect(origin: contentOffset, size: collectionView.frame.size)
         collectionView.bounds = newBounds
     }
-    
+
     func applyTransform(to attributes: UICollectionViewLayoutAttributes) {
         guard let collectionView = collectionView else {
             return
@@ -191,15 +189,14 @@ class CarouselCollectionViewFlowLayout: UICollectionViewFlowLayout {
         let zIndex = (1 - abs(position)) * 10
         attributes.zIndex = Int(zIndex)
     }
-    
-    internal func frame(for indexPath: IndexPath) -> CGRect {
+
+    func frame(for indexPath: IndexPath) -> CGRect {
         let numberOfItems = numberOfItems * indexPath.section + indexPath.item
         let originX: CGFloat = leadingSpacing + CGFloat(numberOfItems) * itemSpacing
         let originY: CGFloat = (collectionView!.frame.height - actualItemSize.height) * 0.5
-        
+
         let origin = CGPoint(x: originX, y: originY)
         let frame = CGRect(origin: origin, size: actualItemSize)
         return frame
     }
 }
-

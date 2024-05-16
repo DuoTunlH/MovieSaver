@@ -1,5 +1,5 @@
 //
-//  APIManager.swift
+//  NetworkManager.swift
 //  MovieSaver
 //
 //  Created by tungdd on 16/05/2024.
@@ -36,7 +36,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-    
+
     func getDiscovery(completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/discover/movie") else {
             completion(.failure(.invalidURL))
@@ -44,7 +44,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-    
+
     func getMoviesByGenre(id: Int, completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/discover/movie", queryItems: [("with_genres", String(id))]) else {
             completion(.failure(.invalidURL))
@@ -52,9 +52,17 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-    
+
     func getSimilarMovies(id: Int, completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/movie/\(id)/similar") else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        request(url: url, completion: completion)
+    }
+
+    func getMovieTrailer(id: Int, completion: @escaping (Result<VideoResponse, NetworkError>) -> Void) {
+        guard let url = buildURL(path: "/3/movie/\(id)/videos") else {
             completion(.failure(.invalidURL))
             return
         }
@@ -69,7 +77,7 @@ class NetworkManager {
                     return
                 }
 
-                guard (200...299).contains(httpResponse.statusCode) else {
+                guard (200 ... 299).contains(httpResponse.statusCode) else {
                     completion(.failure(.invalidStatusCode(httpResponse.statusCode)))
                     return
                 }
@@ -94,7 +102,6 @@ class NetworkManager {
             task.resume()
         }
     }
-        
 
     private func buildURL(path: String, queryItems: [(String, String)]? = nil) -> URL? {
         var components = URLComponents(string: baseURL)
