@@ -9,6 +9,7 @@ import Foundation
 
 protocol ExploreDelegate: AnyObject {
     func didUpdateMovies()
+    func didSelectCategory()
 }
 
 class ExploreViewModel {
@@ -25,21 +26,37 @@ class ExploreViewModel {
             }
         }
     }
+    
+    private var currentCategoryId: Int? {
+        didSet {
+            fetchMovies(id: currentCategoryId)
+        }
+    }
+
+    private var isLoading = false
+    private var page = 1
 
     func numberOfMovies() -> Int {
         return movies.count
     }
 
-    func fetchMovies(id: Int) {
-        NetworkManager.shared.getMoviesByGenre(id: id, completion: {
-            result in
+    func fetchMovies(id: Int?) {
+        guard let id else { return }
+        NetworkManager.shared.getMoviesByGenre(id: id, page: page, completion: {
+            [weak self] result in
+            guard let self else { return }
             switch result {
             case let .success(response):
-                self.movies = response.results
+                self.movies += response.results
             case let .failure(error):
                 print(error)
             }
         })
+    }
+
+    func fetchMore() {
+        page += 1
+        fetchMovies(id: currentCategoryId)
     }
 
     func getMovie(index: Int) -> Movie? {
@@ -51,7 +68,10 @@ class ExploreViewModel {
 
     @objc func didSelectCategory(notification: NSNotification) {
         if let id = notification.object as? Int {
-            fetchMovies(id: id)
+            page = 1
+            movies = []
+            currentCategoryId = id
+            delegate?.didSelectCategory()
         }
     }
 }

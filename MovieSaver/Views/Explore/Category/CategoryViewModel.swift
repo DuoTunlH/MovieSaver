@@ -20,6 +20,8 @@ class CategoryViewModel {
         }
     }
 
+    var firstDisplay = true
+
     func numberOfGenres() -> Int {
         return genres.count
     }
@@ -33,7 +35,8 @@ class CategoryViewModel {
 
     func fetchCategory() {
         NetworkManager.shared.getGenres(completion: {
-            result in
+            [weak self] result in
+            guard let self else { return }
             switch result {
             case let .success(response):
                 self.genres = response.genres

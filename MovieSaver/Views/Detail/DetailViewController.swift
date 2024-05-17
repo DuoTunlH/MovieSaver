@@ -9,9 +9,11 @@ import UIKit
 
 private let similarCell = "similarCell"
 private let detailReusableView = "detailReusableView"
-class DetailViewController: UIViewController {
+
+class DetailViewController: ViewController {
     @IBOutlet var collectionView: UICollectionView!
     var viewModel = DetailViewModel()
+    var favouriteBtn: UIBarButtonItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,7 @@ class DetailViewController: UIViewController {
         viewModel.delegate = self
         viewModel.fetchSimilarMovies()
         viewModel.fetchTrailers()
+        viewModel.fetchIsFavourite()
     }
 
     convenience init(movie: Movie) {
@@ -33,10 +36,25 @@ class DetailViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "SimilarCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: similarCell)
         collectionView.register(UINib(nibName: "DetailReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: detailReusableView)
+
+        favouriteBtn = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(toggleFavourite))
+
+        navigationItem.rightBarButtonItem = favouriteBtn
+    }
+
+    @objc func toggleFavourite() {
+        viewModel.toggleFavourite()
     }
 }
 
 extension DetailViewController: DetailDelegate {
+    func didUpdateFavourite(isFavourite: Bool) {
+        DispatchQueue.main.async {
+            let imageName = isFavourite ? "heart.fill" : "heart"
+            self.favouriteBtn?.image = UIImage(named: imageName)
+        }
+    }
+
     func didUpdateSimilarMovies() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -86,9 +104,9 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let movie = viewModel.getSimilarMovies(index: indexPath.row) else { return }
-            let vc = DetailViewController(movie: movie)
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = DetailViewController(movie: movie)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let indexPath = IndexPath(row: 0, section: 0)

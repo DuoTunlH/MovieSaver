@@ -70,5 +70,20 @@ extension CategoryCollectionReusableView: UICollectionViewDelegate, UICollection
 
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.setSelectedCategory(index: indexPath.row)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+
+    func collectionView(_: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 && viewModel.firstDisplay {
+            cell.isSelected = true
+            viewModel.firstDisplay = false
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if indexPath.row != 0 && collectionView.cellForItem(at: IndexPath(item: 0, section: 0))?.isSelected == true {
+            collectionView.cellForItem(at: IndexPath(item: 0, section: 0))?.isSelected = false
+        }
+        return true
     }
 }

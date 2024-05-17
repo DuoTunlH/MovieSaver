@@ -45,8 +45,19 @@ class NetworkManager {
         request(url: url, completion: completion)
     }
 
-    func getMoviesByGenre(id: Int, completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
-        guard let url = buildURL(path: "/3/discover/movie", queryItems: [("with_genres", String(id))]) else {
+    func getMoviesByGenre(id: Int, page: Int, completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
+        guard let url = buildURL(path: "/3/discover/movie",
+                                 queryItems: [("with_genres", String(id)),
+                                              ("page", String(page))])
+        else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        request(url: url, completion: completion)
+    }
+
+    func getMovieById(id: Int64, completion: @escaping (Result<Movie, NetworkError>) -> Void) {
+        guard let url = buildURL(path: "/3/movie/\(id)") else {
             completion(.failure(.invalidURL))
             return
         }

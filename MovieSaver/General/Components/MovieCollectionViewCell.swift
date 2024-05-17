@@ -26,7 +26,19 @@ class MovieCollectionViewCell: UICollectionViewCell {
             imageView.load(from: imageURL)
         }
         titleLabel.text = movie.title
-        releaseDateLabel.text = movie.release_date
+
+        if let date = movie.release_date {
+            if date != "" {
+                let index = date.index(date.startIndex, offsetBy: 4)
+                let substring = String(date.prefix(upTo: index))
+                releaseDateLabel.text = substring
+            }
+        }
         overviewLabel.text = movie.overview
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
     }
 }

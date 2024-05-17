@@ -13,7 +13,7 @@ protocol DiscoveryDelegate: AnyObject {
 
 class DiscoveryViewModel {
     weak var delegate: DiscoveryDelegate?
-
+    
     private var movies = [Movie]() {
         didSet {
             if let delegate {
@@ -21,10 +21,12 @@ class DiscoveryViewModel {
             }
         }
     }
-
+    
     func fetchMovies() {
         NetworkManager.shared.getDiscovery(completion: {
-            result in
+            [weak self] result in
+            guard let self else { return }
+            
             switch result {
             case let .success(response):
                 self.movies = response.results
@@ -33,13 +35,15 @@ class DiscoveryViewModel {
             }
         })
     }
-
+    
     func getMovie(index: Int) -> Movie? {
         if index >= movies.count {
             return nil
         }
         return movies[index]
     }
-
-    func selectCategory(index _: Int) {}
+    
+    func didSelectCarouselItem(index: Int) {
+        NotificationCenter.default.post(name: .didSelectCarouselItem, object: movies[index])
+    }
 }

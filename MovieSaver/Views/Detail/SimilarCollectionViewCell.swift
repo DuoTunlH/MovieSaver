@@ -20,4 +20,9 @@ class SimilarCollectionViewCell: UICollectionViewCell {
             imageView.load(from: imageURL)
         }
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
 }

@@ -72,6 +72,6 @@ extension CarouselCollectionViewCell: UICollectionViewDelegate, UICollectionView
     }
 
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.selectCategory(index: indexPath.row)
+        viewModel.didSelectCarouselItem(index: indexPath.row)
     }
 }

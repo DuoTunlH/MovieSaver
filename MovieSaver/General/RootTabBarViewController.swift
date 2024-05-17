@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol Scrollable {
+    func scrollToTop()
+}
+
 class RootTabBarViewController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,5 +40,19 @@ class RootTabBarViewController: UITabBarController {
         favouriteNVC.tabBarItem.title = "Favourite"
 
         setViewControllers([exploreNVC, favouriteNVC], animated: false)
+        
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        tabBar.addGestureRecognizer(doubleTapGesture)
+    }
+    
+    @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        // Ensure there are view controllers in the tab bar
+        guard let navController = selectedViewController as? UINavigationController else { return }
+        
+        // Scroll to top if the root view controller is a scrollable view controller
+        if let scrollableVC = navController.topViewController as? Scrollable {
+            scrollableVC.scrollToTop()
+        }
     }
 }
