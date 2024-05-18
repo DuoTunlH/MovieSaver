@@ -111,7 +111,6 @@ class DetailViewModel {
 
                 switch result {
                 case .success:
-                    print("Movie saved successfully.")
                     NotificationCenter.default.post(name: .didAddFavourite, object: movie)
                 case let .failure(error):
                     print(error)
@@ -124,7 +123,6 @@ class DetailViewModel {
                 
                 switch result {
                 case .success:
-                    print("Movie deleted successfully.")
                     NotificationCenter.default.post(name: .didRemoveFavourite, object: movie.id)
                 case let .failure(error):
                     print(error)

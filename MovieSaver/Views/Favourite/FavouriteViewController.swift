@@ -16,7 +16,7 @@ class FavouriteViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Favourite ❤️"
+        title = "favourite".localize()
 
         navigationController?.navigationBar.prefersLargeTitles = true
 

@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  MovieSaver
+
+  Created by tungdd on 18/05/2024.
+  
+*/
+
+"explore" = "Explore 🌎";
+"favourite" = "Favourite ❤️";
+"similar" = "Similar";
+"saved" = "Saved";
+

@@ -20,7 +20,7 @@ class ExploreViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Explore 🌎"
+        title = "explore".localize()
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let layout = exploreCollectionView.collectionViewLayout as? UICollectionViewFlowLayout
@@ -36,6 +36,7 @@ class ExploreViewController: ViewController {
         viewModel.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(didSelectCarouselItem), name: .didSelectCarouselItem, object: nil)
+        
     }
     
     @objc
