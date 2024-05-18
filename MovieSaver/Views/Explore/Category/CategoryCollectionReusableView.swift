@@ -24,6 +24,8 @@ class CategoryCollectionReusableView: UICollectionReusableView {
         super.init(frame: newFrame)
 
         addSubview(collectionView)
+        
+        collectionView.backgroundColor = .white
 
         collectionView.delegate = self
         collectionView.dataSource = self

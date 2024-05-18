@@ -44,6 +44,7 @@
 		90C905252BF83E2C009C4A30 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 90C905272BF83E2C009C4A30 /* Localizable.strings */; };
 		90C905292BF83F73009C4A30 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C905282BF83F73009C4A30 /* String+Localization.swift */; };
 		90C9052B2BF8446C009C4A30 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C9052A2BF8446C009C4A30 /* NotificationView.swift */; };
+		90C905312BF87C75009C4A30 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C905302BF87C75009C4A30 /* WebKit.framework */; };
 		90E45A212BF6E32800EE9446 /* DataPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E45A202BF6E32800EE9446 /* DataPersistenceManager.swift */; };
 		90E45A232BF6EF1500EE9446 /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E45A222BF6EF1500EE9446 /* FavouriteViewModel.swift */; };
 		90E45A292BF713BB00EE9446 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E45A272BF713BB00EE9446 /* MovieCollectionViewCell.swift */; };
@@ -91,6 +92,7 @@
 		90C905262BF83E2C009C4A30 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		90C905282BF83F73009C4A30 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		90C9052A2BF8446C009C4A30 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		90C905302BF87C75009C4A30 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		90E45A202BF6E32800EE9446 /* DataPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistenceManager.swift; sourceTree = "<group>"; };
 		90E45A222BF6EF1500EE9446 /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		90E45A272BF713BB00EE9446 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90C905312BF87C75009C4A30 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +141,7 @@
 			children = (
 				9083BA642BF5CBAA00D88019 /* MovieSaver */,
 				9083BA632BF5CBAA00D88019 /* Products */,
+				90C9052F2BF87C74009C4A30 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,6 +245,14 @@
 				90E45A2B2BF7163100EE9446 /* ViewController.swift */,
 			);
 			path = General;
+			sourceTree = "<group>";
+		};
+		90C9052F2BF87C74009C4A30 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				90C905302BF87C75009C4A30 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		90E45A252BF7137A00EE9446 /* Extensions */ = {

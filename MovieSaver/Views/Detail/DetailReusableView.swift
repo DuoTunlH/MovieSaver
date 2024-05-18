@@ -12,13 +12,37 @@ class DetailReusableView: UICollectionReusableView {
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var yearLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var videoWebView: WKWebView!
     @IBOutlet var similarLabel: UILabel!
+    
+    @IBOutlet weak var webViewPlaceholder: UIView! // Outlet for the placeholder view
+    
+    var webView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         similarLabel.text = "similar".localize()
+        
+        if #available(iOS 13.0, *) {
+              let wkWebView = WKWebView(frame: webViewPlaceholder.bounds)
+              webView = wkWebView
+          } else {
+              let uiWebView = UIWebView(frame: webViewPlaceholder.bounds)
+              webView = uiWebView
+          }
+        
+        if let webView = webView {
+            webView.translatesAutoresizingMaskIntoConstraints = false
+
+            webViewPlaceholder.addSubview(webView)
+
+            NSLayoutConstraint.activate([
+                webView.topAnchor.constraint(equalTo: webViewPlaceholder.topAnchor),
+                webView.bottomAnchor.constraint(equalTo: webViewPlaceholder.bottomAnchor),
+                webView.leadingAnchor.constraint(equalTo: webViewPlaceholder.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: webViewPlaceholder.trailingAnchor)
+            ])
+         }
     }
     
     func setMovie(_ movie: Movie) {
@@ -35,8 +59,16 @@ class DetailReusableView: UICollectionReusableView {
     }
 
     func setTrailer(_ trailer: Video) {
-        if let path = trailer.key, let url = URL(string: "https://www.youtube.com/embed/\(path)") {
-            videoWebView.load(URLRequest(url: url))
-        }
+        guard let path = trailer.key, let url = URL(string: "https://www.youtube.com/embed/\(path)") else { return }
+        
+        if #available(iOS 13.0, *) {
+            if let webView = webView as? WKWebView {
+                webView.load(URLRequest(url: url))
+            }
+          } else {
+              if let webView = webView as? UIWebView {
+                  webView.loadRequest(URLRequest(url: url))
+              }
+          }
     }
 }

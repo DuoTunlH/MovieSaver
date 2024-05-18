@@ -18,6 +18,8 @@ class CarouselCollectionViewCell: UICollectionViewCell {
 
         super.init(frame: frame)
 
+        collectionView.backgroundColor = .white
+        
         layout.scrollDirection = .horizontal
 
         let height = collectionView.bounds.height

@@ -30,6 +30,7 @@ class RootNavigationBarController: UINavigationController {
     func showNotification(iconName: String, text: String) {
         notificationView.imageView.image = UIImage(named: "check")
         notificationView.label.text = text
+        notificationView.layer.zPosition = 1
         notificationView.showNotification()
     }
 }
