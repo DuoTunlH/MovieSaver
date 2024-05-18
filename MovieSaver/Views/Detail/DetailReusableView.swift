@@ -13,7 +13,14 @@ class DetailReusableView: UICollectionReusableView {
     @IBOutlet var yearLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var videoWebView: WKWebView!
-
+    @IBOutlet var similarLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        similarLabel.text = "similar".localize()
+    }
+    
     func setMovie(_ movie: Movie) {
         titleLabel.text = movie.title ?? movie.original_title
         descriptionLabel.text = movie.overview

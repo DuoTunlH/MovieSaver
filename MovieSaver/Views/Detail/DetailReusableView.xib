@@ -88,6 +88,7 @@
             </constraints>
             <connections>
                 <outlet property="descriptionLabel" destination="Gfi-qW-cRy" id="zqm-zh-5HT"/>
+                <outlet property="similarLabel" destination="8Wi-yf-aZw" id="jg3-ro-paE"/>
                 <outlet property="titleLabel" destination="dIX-Ty-97n" id="z5a-4i-NFG"/>
                 <outlet property="videoWebView" destination="m42-iu-MFc" id="do5-io-uu1"/>
                 <outlet property="yearLabel" destination="n5d-RU-aQa" id="8D1-z6-OXd"/>

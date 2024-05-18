@@ -23,6 +23,8 @@ class DetailViewController: ViewController {
         viewModel.fetchSimilarMovies()
         viewModel.fetchTrailers()
         viewModel.fetchIsFavourite()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didAddFavourite), name: .didAddFavourite, object: nil)
     }
 
     convenience init(movie: Movie) {
@@ -44,6 +46,11 @@ class DetailViewController: ViewController {
 
     @objc func toggleFavourite() {
         viewModel.toggleFavourite()
+    }
+    
+    @objc func didAddFavourite(notification: NSNotification) {
+        let nc = self.navigationController as? RootNavigationBarController
+        nc?.showNotification(iconName: "check", text: "saved".localize())
     }
 }
 
