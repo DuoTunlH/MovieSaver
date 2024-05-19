@@ -54,6 +54,15 @@ class SearchViewController: UIViewController {
         navigationItem.titleView = searchBar
     }
     
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
 }
 
 extension SearchViewController: SearchDelegate {
@@ -96,7 +105,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
+        dismissKeyboard()
     }
 }
 

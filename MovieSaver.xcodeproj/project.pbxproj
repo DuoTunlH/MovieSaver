@@ -47,7 +47,6 @@
 		90C905312BF87C75009C4A30 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C905302BF87C75009C4A30 /* WebKit.framework */; };
 		90C905342BF99B1B009C4A30 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C905332BF99B1B009C4A30 /* SearchViewController.swift */; };
 		90C905362BF99EF8009C4A30 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C905352BF99EF8009C4A30 /* SearchViewModel.swift */; };
-		90C905382BF9A618009C4A30 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C905372BF9A618009C4A30 /* UIViewController+HideKeyboard.swift */; };
 		90E45A212BF6E32800EE9446 /* DataPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E45A202BF6E32800EE9446 /* DataPersistenceManager.swift */; };
 		90E45A232BF6EF1500EE9446 /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E45A222BF6EF1500EE9446 /* FavouriteViewModel.swift */; };
 		90E45A292BF713BB00EE9446 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E45A272BF713BB00EE9446 /* MovieCollectionViewCell.swift */; };
@@ -98,7 +97,6 @@
 		90C905302BF87C75009C4A30 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		90C905332BF99B1B009C4A30 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		90C905352BF99EF8009C4A30 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		90C905372BF9A618009C4A30 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
 		90E45A202BF6E32800EE9446 /* DataPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPersistenceManager.swift; sourceTree = "<group>"; };
 		90E45A222BF6EF1500EE9446 /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		90E45A272BF713BB00EE9446 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 				9083BAA32BF615C600D88019 /* UIImageView+LoadUrl.swift */,
 				9054E0C72BF656F80047BAF4 /* NotificationCenter+Name.swift */,
 				90C905282BF83F73009C4A30 /* String+Localization.swift */,
-				90C905372BF9A618009C4A30 /* UIViewController+HideKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -386,7 +383,6 @@
 				90C905292BF83F73009C4A30 /* String+Localization.swift in Sources */,
 				9054E0D42BF663A50047BAF4 /* DetailReusableView.swift in Sources */,
 				9054E0C82BF656F80047BAF4 /* NotificationCenter+Name.swift in Sources */,
-				90C905382BF9A618009C4A30 /* UIViewController+HideKeyboard.swift in Sources */,
 				90E45A292BF713BB00EE9446 /* MovieCollectionViewCell.swift in Sources */,
 				9083BA8F2BF5EB9000D88019 /* Movie.swift in Sources */,
 				9083BA8B2BF5E32A00D88019 /* CarouselCollectionViewCell.swift in Sources */,
