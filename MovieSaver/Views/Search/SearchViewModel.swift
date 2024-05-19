@@ -10,6 +10,7 @@ import Foundation
 protocol SearchDelegate: AnyObject {
     func didUpdateMovies()
 }
+
 class SearchViewModel {
     weak var delegate: SearchDelegate?
     
@@ -20,15 +21,12 @@ class SearchViewModel {
     }
     
     private var searchText: String?
-    private var page: Int = 1
     
     func search(searchText: String) {
         
         movies = []
-        page = 1
-        self.searchText = searchText
         
-        NetworkManager.shared.searchMovies(text: searchText, page: page) { results in
+        NetworkManager.shared.searchMovies(text: searchText, page: 1) { results in
             switch results {
             case .success(let response):
                 self.movies = response.results
@@ -37,22 +35,7 @@ class SearchViewModel {
             }
         }
     }
-    
-    func fetchMore() {
-        guard let searchText else { return }
-        
-        page += 1
-        
-        NetworkManager.shared.searchMovies(text: searchText, page: page) { results in
-            switch results {
-            case .success(let response):
-                self.movies += response.results
-            case let .failure(error):
-                print(error)
-            }
-        }
-    }
-    
+      
     func resetSearch() {
         movies = []
     }

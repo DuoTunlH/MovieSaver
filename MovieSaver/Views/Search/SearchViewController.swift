@@ -98,12 +98,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         navigationController?.tabBarController?.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func collectionView(_: UICollectionView, willDisplay _: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.numberOfMovies() - 6 {
-            viewModel.fetchMore()
-        }
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         dismissKeyboard()
     }
