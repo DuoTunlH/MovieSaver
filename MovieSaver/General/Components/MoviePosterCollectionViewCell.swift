@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SimilarCollectionViewCell: UICollectionViewCell {
+class MoviePosterCollectionViewCell: UICollectionViewCell {
     @IBOutlet var imageView: UIImageView!
 
     override func awakeFromNib() {

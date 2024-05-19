@@ -32,14 +32,18 @@ class RootTabBarViewController: UITabBarController {
         let exploreVC = ExploreViewController()
         let exploreNVC = UINavigationController(rootViewController: exploreVC)
         exploreNVC.tabBarItem.image = UIImage(named: "explore")
-        exploreNVC.tabBarItem.title = "Explore"
-
+        exploreNVC.tabBarItem.title = "explore".localize()
         let favouriteVC = FavouriteViewController()
         let favouriteNVC = UINavigationController(rootViewController: favouriteVC)
         favouriteNVC.tabBarItem.image = UIImage(named: "profile")
-        favouriteNVC.tabBarItem.title = "Favourite"
+        favouriteNVC.tabBarItem.title = "favourite".localize()
+        
+        let sVC = SearchViewController()
+        let sNVC = UINavigationController(rootViewController: sVC)
+        sNVC.tabBarItem.image = UIImage(named: "search")
+        sNVC.tabBarItem.title = "search".localize()
 
-        setViewControllers([exploreNVC, favouriteNVC], animated: false)
+        setViewControllers([exploreNVC, sNVC, favouriteNVC], animated: false)
         
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
         doubleTapGesture.numberOfTapsRequired = 2

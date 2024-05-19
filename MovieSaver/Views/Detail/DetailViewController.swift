@@ -36,7 +36,7 @@ class DetailViewController: ViewController {
     func setupUI() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UINib(nibName: "SimilarCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: similarCell)
+        collectionView.register(UINib(nibName: "MoviePosterCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: similarCell)
         collectionView.register(UINib(nibName: "DetailReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: detailReusableView)
 
         favouriteBtn = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(toggleFavourite))
@@ -81,7 +81,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: similarCell, for: indexPath) as! SimilarCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: similarCell, for: indexPath) as! MoviePosterCollectionViewCell
         if let movie = viewModel.getSimilarMovies(index: indexPath.row) {
             cell.setImageUrl(movie.poster_path)
         }

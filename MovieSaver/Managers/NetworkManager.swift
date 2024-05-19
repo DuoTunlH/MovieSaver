@@ -26,9 +26,9 @@ class NetworkManager {
     static let shared = NetworkManager()
     private let baseURL = Constants.BASE_URL
     private let apiKey = Constants.API_KEY
-
+    
     private init() {}
-
+    
     func getGenres(completion: @escaping (Result<GenresResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/genre/movie/list") else {
             completion(.failure(.invalidURL))
@@ -36,7 +36,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-
+    
     func getDiscovery(completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/discover/movie") else {
             completion(.failure(.invalidURL))
@@ -44,7 +44,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-
+    
     func getMoviesByGenre(id: Int, page: Int, completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/discover/movie",
                                  queryItems: [("with_genres", String(id)),
@@ -55,7 +55,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-
+    
     func getMovieById(id: Int64, completion: @escaping (Result<Movie, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/movie/\(id)") else {
             completion(.failure(.invalidURL))
@@ -63,7 +63,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-
+    
     func getSimilarMovies(id: Int, completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/movie/\(id)/similar") else {
             completion(.failure(.invalidURL))
@@ -71,7 +71,7 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-
+    
     func getMovieTrailer(id: Int, completion: @escaping (Result<VideoResponse, NetworkError>) -> Void) {
         guard let url = buildURL(path: "/3/movie/\(id)/videos") else {
             completion(.failure(.invalidURL))
@@ -79,7 +79,17 @@ class NetworkManager {
         }
         request(url: url, completion: completion)
     }
-
+    
+    func searchMovies(text: String, page: Int , completion: @escaping (Result<MoviesResponse, NetworkError>) -> Void) {
+        guard let url = buildURL(path: "/3/search/movie", queryItems: [("query", text),
+                                                                       ("page", String(page))])
+        else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        request(url: url, completion: completion)
+    }
+    
     private func request<T: Decodable>(url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
         DispatchQueue.global(qos: .utility).async {
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -87,22 +97,22 @@ class NetworkManager {
                     completion(.failure(.invalidResponse))
                     return
                 }
-
+                
                 guard (200 ... 299).contains(httpResponse.statusCode) else {
                     completion(.failure(.invalidStatusCode(httpResponse.statusCode)))
                     return
                 }
-
+                
                 if let error = error {
                     completion(.failure(.requestFailed(error)))
                     return
                 }
-
+                
                 guard let data = data else {
                     completion(.failure(.noData))
                     return
                 }
-
+                
                 do {
                     let decodedData = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(decodedData))
@@ -113,17 +123,17 @@ class NetworkManager {
             task.resume()
         }
     }
-
+    
     private func buildURL(path: String, queryItems: [(String, String)]? = nil) -> URL? {
         var components = URLComponents(string: baseURL)
         components?.path = path
-
+        
         var allQueryItems = [URLQueryItem(name: "api_key", value: apiKey)]
-
+        
         if let additionalQueryItems = queryItems {
             allQueryItems += additionalQueryItems.map { URLQueryItem(name: $0.0, value: $0.1) }
         }
-
+        
         components?.queryItems = allQueryItems
         return components?.url
     }
