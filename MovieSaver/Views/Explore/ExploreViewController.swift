@@ -37,6 +37,19 @@ class ExploreViewController: ViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didSelectCarouselItem), name: .didSelectCarouselItem, object: nil)
         
+        configureRefreshControl ()
+    }
+    
+    func configureRefreshControl () {
+       // Add the refresh control to your UIScrollView object.
+       exploreCollectionView.refreshControl = UIRefreshControl()
+        exploreCollectionView.refreshControl?.addTarget(self, action:
+                                          #selector(handleRefreshControl),
+                                          for: .valueChanged)
+    }
+        
+    @objc func handleRefreshControl() {
+        viewModel.refresh()
     }
     
     @objc
@@ -59,6 +72,7 @@ extension ExploreViewController: ExploreDelegate {
     func didUpdateMovies() {
         DispatchQueue.main.async {
             self.exploreCollectionView.reloadData()
+            self.exploreCollectionView.refreshControl?.endRefreshing()
         }
     }
 }

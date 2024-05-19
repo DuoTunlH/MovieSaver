@@ -53,6 +53,11 @@ class ExploreViewModel {
             }
         })
     }
+    
+    func refresh() {
+        page = 1
+        fetchMovies(id: currentCategoryId)
+    }
 
     func fetchMore() {
         page += 1
