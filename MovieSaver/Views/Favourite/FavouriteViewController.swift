@@ -12,6 +12,13 @@ private let exploreCell = "exploreCell"
 class FavouriteViewController: ViewController {
     @IBOutlet var collectionView: UICollectionView!
     let viewModel = FavouriteViewModel()
+    lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "favouriteIsEmpty".localize()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +41,7 @@ extension FavouriteViewController: FavouriteDelegate {
     func didUpdateMovies() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            self.collectionView.backgroundView = self.viewModel.numberOfMovies() == 0 ? self.emptyLabel : nil
         }
     }
 }

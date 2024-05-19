@@ -119,6 +119,7 @@
 		9054E0C02BF648450047BAF4 /* Favourite */ = {
 			isa = PBXGroup;
 			children = (
+				90C905392BF9AE96009C4A30 /* EmptyView */,
 				9054E0C12BF648450047BAF4 /* FavouriteViewController.swift */,
 				90E45A222BF6EF1500EE9446 /* FavouriteViewModel.swift */,
 				9054E0C22BF648450047BAF4 /* FavouriteViewController.xib */,
@@ -265,6 +266,13 @@
 				90C905352BF99EF8009C4A30 /* SearchViewModel.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		90C905392BF9AE96009C4A30 /* EmptyView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = EmptyView;
 			sourceTree = "<group>";
 		};
 		90E45A252BF7137A00EE9446 /* Extensions */ = {
